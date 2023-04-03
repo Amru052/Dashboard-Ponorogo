@@ -26,7 +26,7 @@ $data3 = array("nama_bidang"=>"",
             "tanggal"=>"",
             "data_uraian"=>[array("nama_uraian"=>"",
                                   "total"=>"",
-                                  "data_rincian"=>[array("nama_rincian"=>"","dana_rincian"=>""),
+                                  "data_rincian"=>[array("nama_rincian"=>"rincian 1","dana_rincian"=>""),
                                                    array("nama_rincian"=>"","dana_rincian"=>"")
                                                    ]
                                  )
