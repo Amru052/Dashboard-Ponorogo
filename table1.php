@@ -1,11 +1,25 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Survey COVID-19</title>
+  <title>RAB</title>
   <link rel="stylesheet" type="text/css" href="style1.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
+<?php
 
+$data1 = [array("nama_bidang"=>"Bidang 1",
+                "data_sub"=>[array("id_sub"=>"1","nama_sub"=>"Sub 1"),
+                             array("id_sub"=>"2","nama_sub"=>"Sub 2")
+                            ]
+            ),
+         array("nama_bidang"=>"Bidang 2",
+                "data_sub"=>[array("id_sub"=>"3","nama_sub"=>"Sub 3"),
+                             array("id_sub"=>"4","nama_sub"=>"Sub 4")
+                            ]
+            )
+      ];
+echo($data1["nama_bidang"])
+?>
 <body>
   <div class="login-root">
     <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
@@ -48,27 +62,37 @@
         <div class="formbg2-outer">
           <div class="formbg2">
             <div class="formbg2-inner padding-horizontal--48">
-              <span class="padding-bottom--15">Database RAB</span>
+              <span class="padding-bottom--15">BIDANG RAB</span>
               <table class="table table-hover">
                 <thead>
                     <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">RAB</th>
-                    <th scope="col">Kegiatan</th>
-                    <th scope="col">Tanggal</th>
-                    <th scope="col">Dana</th>
+                    <th scope="col">Bidang</th>
+                    <th scope="col">Sub-bidang</th>
+                    <th scope="col">Total</th>
                     <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td scope='row'>1</td>
-                        <td scope='col'>Pelaksanaan Pembangunan Desa</td>
+                        <td scope='col'>bidang</td>
                         <td scope='col'>Pembangunan Prasarana Jalan Desa</td>
-                        <td scope='col'>11/11/2011</td>
                         <td scope='col'>27,735,000</td>
                         <td><a href= 'detail.php?id=$id'> [Detail] </a></td>
                     </tr>
+                    <?php
+                      for ($x1 = 0; $x1 < 2; $x1++) {
+	                      for ($x2 = 0; $x2 < 2; $x2++) {
+		                      echo "<tr><td>";
+                          echo $data1[$x1]["nama_bidang"];
+                          echo "</td><td> ";
+                          echo $data1[$x1]["data_sub"][$x2]["nama_sub"];
+                          echo "</td>
+                          <td> total </td> 
+                          <td> <a> [Detail] </a></td>
+                          </tr>" ;
+	                      }
+                      }
+?>
                 </tbody>
                 </table>
                 <div class="field padding-bottom--24" style="width: 100px;">
