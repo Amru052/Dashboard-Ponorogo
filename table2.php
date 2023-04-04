@@ -7,18 +7,13 @@
 </head>
 <?php
 
-$data1 = [array("nama_bidang"=>"Bidang 1",
-                "data_sub"=>[array("id_sub"=>"1","nama_sub"=>"Sub 1"),
-                             array("id_sub"=>"2","nama_sub"=>"Sub 2")
-                            ]
-            ),
-         array("nama_bidang"=>"Bidang 2",
-                "data_sub"=>[array("id_sub"=>"3","nama_sub"=>"Sub 3"),
-                             array("id_sub"=>"4","nama_sub"=>"Sub 4")
-                            ]
-            )
-      ];
-echo($data1["nama_bidang"])
+$data2 = array("nama_sub"=>"Sub 1", 
+              "data_keg"=>[array("nama_keg"=>"kegiatan 1","tanggal"=>"tanggal 1","jumlah"=>"jumlah 1"),
+                           array("nama_keg"=>"kegiatan 2","tanggal"=>"tanggal 2","jumlah"=>"jumlah 2"),
+                           array("nama_keg"=>"kegiatan 3","tanggal"=>"tanggal 3","jumlah"=>"jumlah 3")
+                          ]
+            );
+
 ?>
 <body>
   <div class="login-root">
@@ -66,33 +61,38 @@ echo($data1["nama_bidang"])
               <table class="table table-hover">
                 <thead>
                     <tr>
-                    <th scope="col">Bidang</th>
                     <th scope="col">Sub-bidang</th>
+                    <th scope="col">Kegiatan</th>
+                    <th scope="col">Tanggal</th>
                     <th scope="col">Total</th>
                     <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td scope='col'>bidang</td>
+                        <td scope='col'>subbidang 1</td>
                         <td scope='col'>Pembangunan Prasarana Jalan Desa</td>
+                        <td scope='col'>tanggal 1</td>
                         <td scope='col'>27,735,000</td>
                         <td><a href= 'detail.php?id=$id'> [Detail] </a></td>
                     </tr>
                     <?php
-                      for ($x1 = 0; $x1 < 2; $x1++) {
-	                      for ($x2 = 0; $x2 < 2; $x2++) {
+                      for ($x1 = 0; $x1 < 3; $x1++) {
 		                      echo "<tr>
                           <td>";
-                          echo $data1[$x1]["nama_bidang"];
+                          echo $data2["nama_sub"];
                           echo "</td>
                           <td> ";
-                          echo $data1[$x1]["data_sub"][$x2]["nama_sub"];
+                          echo $data2["data_keg"][$x1]["nama_keg"];
                           echo "</td>
-                          <td> total </td> 
+                          <td>";
+                          echo $data2["data_keg"][$x1]["tanggal"];
+                          echo "</td>
+                          <td>";
+                          echo $data2["data_keg"][$x1]["jumlah"];
+                          echo "</td>
                           <td> <a> [Detail] </a></td>
                           </tr>" ;
-	                      }
                       }
 ?>
                 </tbody>
