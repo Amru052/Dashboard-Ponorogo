@@ -82,9 +82,11 @@ echo($data1["nama_bidang"])
                     <?php
                       for ($x1 = 0; $x1 < 2; $x1++) {
 	                      for ($x2 = 0; $x2 < 2; $x2++) {
-		                      echo "<tr><td>";
+		                      echo "<tr>
+                          <td>";
                           echo $data1[$x1]["nama_bidang"];
-                          echo "</td><td> ";
+                          echo "</td>
+                          <td> ";
                           echo $data1[$x1]["data_sub"][$x2]["nama_sub"];
                           echo "</td>
                           <td> total </td> 
