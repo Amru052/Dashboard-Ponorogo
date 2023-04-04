@@ -5,7 +5,26 @@
   <link rel="stylesheet" type="text/css" href="style1.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
-
+<?php
+$data3 = array("nama_bidang"=>"Bidang 1",
+            "nama_sub"=>"Sub-bidang 1",
+            "nama_keg"=>"Kegiatan 1",
+            "tanggal"=>"Tanggal 1",
+            "data_uraian"=>[array("nama_uraian"=>"Uraian 1",
+                                  "total"=>" Total 1",
+                                  "data_rincian"=>[array("nama_rincian"=>"rincian 1","dana_rincian"=>"dana 1"),
+                                                   array("nama_rincian"=>"rincian 2","dana_rincian"=>"dana 2")
+                                                   ]
+                                  ),
+                            array("nama_uraian"=>"Uraian 2",
+                                  "total"=>" Total 2",
+                                  "data_rincian"=>[array("nama_rincian"=>"rincian 1","dana_rincian"=>"dana 1"),
+                                                   array("nama_rincian"=>"rincian 2","dana_rincian"=>"dana 2")
+                                                   ]
+                                 )
+                            ]
+            );
+?>
 <body>
   <div class="login-root">
     <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
@@ -67,44 +86,78 @@
                         <td scope='row'>Waktu Pelaksanaan</td>
                         <td scope='col'>: 11/11/2011</td>
                     </tr>
-                    </table>
+              </table>
+              <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <td scope='row'>Bidang</td>
+                        <td scope='col'>: <?php echo $data3["nama_bidang"]; ?> </td>
+                    </tr>
+                    <tr>
+                        <td scope='row'>Sub-bidang</td>
+                        <td scope='col'>: <?php echo $data3["nama_sub"]; ?> </td>
+                    </tr>
+                    <tr>
+                        <td scope='row'>Kegiatan</td>
+                        <td scope='col'>: <?php echo $data3["nama_keg"]; ?> </td>
+                    </tr>
+                    <tr>
+                        <td scope='row'>Waktu Pelaksanaan</td>
+                        <td scope='col'>: <?php echo $data3["tanggal"]; ?></td>
+                    </tr>
+              </table>
                     <table class="table table-hover">
                     <thead>
                     <tr>
-                    <th scope="col">Nomer</th>
                     <th scope="col">Uraian</th>
                     <th scope="col">Rincian</th>
-                    <th scope="col">Jumlah</th>
+                    <th scope="col">Dana</th>
                     <th scope="col" style='text-align: center'>Total</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td scope='row'>1</td>
                         <td scope='col'>Belanja Honorarium</td>
                         <td scope='col'>Honorarium TPK</td>
                         <td scope='col'>1,550,000</td>
                         <td rowspan="2" scope="col" style='text-align: center; vertical-align: middle'>2,300,000</td>
                     </tr>
                     <tr>
-                        <td scope='row'></td>
                         <td scope='col'></td>
                         <td scope='col'>Honorarium Tim Pemeriksa</td>
                         <td scope='col'>750.000</td>
                     </tr>
                     <tr>
-                        <td scope='row'>2</td>
                         <td scope='col'>Belanja Upah</td>
                         <td scope='col'>Pekerja</td>
                         <td scope='col'>17,700,000</td>
                         <td rowspan="2" scope="col" style='text-align: center; vertical-align: middle'>25,435,000</td>
                     </tr>
                     <tr>
-                        <td scope='row'></td>
                         <td scope='col'></td>
                         <td scope='col'>Tukang</td>
                         <td scope='col'>7,735,000</td>
                     </tr>
+                    <?php
+                      for ($x1 = 0; $x1 < 2; $x1++) {
+	                      for ($x2 = 0; $x2 < 2; $x2++) {
+		                      echo "<tr>
+                          <td>";
+                          echo $data3["data_uraian"][$x1]["nama_uraian"];
+                          echo "</td>
+                          <td> ";
+                          echo $data3["data_uraian"][$x1]["data_rincian"][$x2]["nama_rincian"];
+                          echo "</td>
+                          <td> ";
+                          echo $data3["data_uraian"][$x1]["data_rincian"][$x2]["dana_rincian"];
+                          echo "</td>
+                          <td> ";
+                          echo $data3["data_uraian"][$x1]["total"];
+                          echo "</td> 
+                          </tr>" ;
+	                      }
+                      }
+?>
                     </table>
                 <div class="field padding-bottom--24" style="width: 100px;">
                   <input class="btn btn-primary" type="submit" name="Back" value="Back" onclick="parent.location='table.php'">
