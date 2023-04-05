@@ -8,9 +8,9 @@
 <?php
 
 $data2 = array("nama_sub"=>"Sub 1",
-               "data_keg"=>[array("id_keg"=>"","nama_keg"=>"kegiatan 1","tanggal"=>"tanggal 1","jumlah"=>"jumlah 1"),
-                            array("id_keg"=>"","nama_keg"=>"kegiatan 2","tanggal"=>"tanggal 2","jumlah"=>"jumlah 2"),
-                            array("id_keg"=>"","nama_keg"=>"kegiatan 3","tanggal"=>"tanggal 3","jumlah"=>"jumlah 3")
+               "data_keg"=>[array("id_keg"=>"keg1","nama_keg"=>"kegiatan 1","tanggal"=>"tanggal 1","jumlah"=>"jumlah 1"),
+                            array("id_keg"=>"keg2","nama_keg"=>"kegiatan 2","tanggal"=>"tanggal 2","jumlah"=>"jumlah 2"),
+                            array("id_keg"=>"keg3","nama_keg"=>"kegiatan 3","tanggal"=>"tanggal 3","jumlah"=>"jumlah 3")
                            ]
             );
 $id_sub = $_REQUEST['id'];
@@ -57,11 +57,10 @@ $id_sub = $_REQUEST['id'];
         <div class="formbg2-outer">
           <div class="formbg2">
             <div class="formbg2-inner padding-horizontal--48">
-              <span class="padding-bottom--15">BIDANG RAB</span>
+              <span class="padding-bottom--15">Sub-Bidang : <?php echo $data2["nama_sub"]?></span>
               <table class="table table-hover">
                 <thead>
                     <tr>
-                    <th scope="col">Sub-bidang</th>
                     <th scope="col">Kegiatan</th>
                     <th scope="col">Tanggal</th>
                     <th scope="col">Total</th>
@@ -76,7 +75,6 @@ $id_sub = $_REQUEST['id'];
                         if ($temp1 == 1) {
                           $temp1 = $temp1+1;
                           echo "<tr>";
-                            echo "<td rowspan=$temp2 scope='row'>" . $data2['nama_sub'] . "</td>";
                             echo "<td scope='row'>" . $kegiatan1['nama_keg'] . "</td>";
                             echo "<td scope='row'>" . $kegiatan1['tanggal'] . "</td>";
                             echo "<td scope='row'>" . $kegiatan1['jumlah'] . "</td>";
@@ -87,7 +85,7 @@ $id_sub = $_REQUEST['id'];
                               echo "<td scope='row'>" . $kegiatan1['nama_keg'] . "</td>";
                               echo "<td scope='row'>" . $kegiatan1['tanggal'] . "</td>";
                               echo "<td scope='row'>" . $kegiatan1['jumlah'] . "</td>";
-                              echo "<td scope='row'><a href='table2.php?id={$kegiatan1['id_keg']}'>[Detail]</a></td>";
+                              echo "<td scope='row'><a href='detail.php?id={$kegiatan1['id_keg']}'>[Detail]</a></td>";
                             echo "</tr>";
                         }
                       };

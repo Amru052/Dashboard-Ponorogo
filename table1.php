@@ -8,13 +8,13 @@
 <?php
 
 $data1 = [array("nama_bidang"=>"Bidang 1",
-                "data_sub"=>[array("id_sub"=>"1","nama_sub"=>"Sub 1"),
-                             array("id_sub"=>"2","nama_sub"=>"Sub 2")
+                "data_sub"=>[array("id_sub"=>"1","nama_sub"=>"Sub 1","dana"=>100),
+                             array("id_sub"=>"2","nama_sub"=>"Sub 2","dana"=>400)
                             ]
             ),
          array("nama_bidang"=>"Bidang 2",
-                "data_sub"=>[array("id_sub"=>"3","nama_sub"=>"Sub 3"),
-                             array("id_sub"=>"4","nama_sub"=>"Sub 4")
+                "data_sub"=>[array("id_sub"=>"3","nama_sub"=>"Sub 3","dana"=>300),
+                             array("id_sub"=>"4","nama_sub"=>"Sub 4","dana"=>400)
                             ]
             )
       ];
@@ -68,28 +68,34 @@ echo($data1["nama_bidang"])
                     <tr>
                     <th scope="col">Bidang</th>
                     <th scope="col">Sub-bidang</th>
-                    <th scope="col">Total</th>
+                    <th scope="col">Dana</th>
                     <th scope="col">Action</th>
+                    <th scope="col">Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                       foreach ($data1 as $bidang) {
                         $temp1=1;
+                        $total=0;
                         foreach ($bidang['data_sub'] as $sub) {
-                          $temp2 = count($sub);
+                          $total=$total+$sub['dana'];
+                        };
+                        foreach ($bidang['data_sub'] as $sub) {
+                          $temp2 = count($bidang["data_sub"]);
                           if ($temp1 == 1) {
                             echo "<tr>";
-                              echo "<td rowspan=$temp2 scope='row'>" . $bidang['nama_bidang'] . "</td>";
+                              echo "<td style = 'vertical-align: middle' rowspan=$temp2 scope='row'>" . $bidang['nama_bidang'] . "</td>";
                               echo "<td scope='row'>" . $sub['nama_sub'] . "</td>";
-                              echo "<td scope='row'>" . $temp1 . "</td>";
+                              echo "<td scope='row'>" . $sub['dana'] . "</td>";
                               echo "<td scope='row'><a href='table2.php?id={$sub['nama_sub']}'>[Detail]</a></td>";
+                              echo "<td style = 'vertical-align: middle' rowspan=$temp2 scope='row'>" . $total . "</td>";
                             echo "</tr>";
                             $temp1 = $temp1+1;
                           } else {
                               echo "<tr>";
                                 echo "<td scope='row'>" . $sub['nama_sub'] . "</td>";
-                                echo "<td scope='row'>" . $temp1 . "</td>";
+                                echo "<td scope='row'>" . $sub['dana'] . "</td>";
                                 echo "<td scope='row'><a href='table2.php?id={$sub['nama_sub']}'>[Detail]</a></td>";
                               echo "</tr>";
                           }                       
