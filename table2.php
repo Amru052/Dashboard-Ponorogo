@@ -7,13 +7,13 @@
 </head>
 <?php
 
-$data2 = array("nama_sub"=>"Sub 1", 
-              "data_keg"=>[array("nama_keg"=>"kegiatan 1","tanggal"=>"tanggal 1","jumlah"=>"jumlah 1"),
-                           array("nama_keg"=>"kegiatan 2","tanggal"=>"tanggal 2","jumlah"=>"jumlah 2"),
-                           array("nama_keg"=>"kegiatan 3","tanggal"=>"tanggal 3","jumlah"=>"jumlah 3")
-                          ]
+$data2 = array("nama_sub"=>"Sub 1",
+               "data_keg"=>[array("id_keg"=>"","nama_keg"=>"kegiatan 1","tanggal"=>"tanggal 1","jumlah"=>"jumlah 1"),
+                            array("id_keg"=>"","nama_keg"=>"kegiatan 2","tanggal"=>"tanggal 2","jumlah"=>"jumlah 2"),
+                            array("id_keg"=>"","nama_keg"=>"kegiatan 3","tanggal"=>"tanggal 3","jumlah"=>"jumlah 3")
+                           ]
             );
-
+$id_sub = $_REQUEST['id'];
 ?>
 <body>
   <div class="login-root">
@@ -69,36 +69,33 @@ $data2 = array("nama_sub"=>"Sub 1",
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td scope='col'>subbidang 1</td>
-                        <td scope='col'>Pembangunan Prasarana Jalan Desa</td>
-                        <td scope='col'>tanggal 1</td>
-                        <td scope='col'>27,735,000</td>
-                        <td><a href= 'detail.php?id=$id'> [Detail] </a></td>
-                    </tr>
                     <?php
-                      for ($x1 = 0; $x1 < 3; $x1++) {
-		                      echo "<tr>
-                          <td>";
-                          echo $data2["nama_sub"];
-                          echo "</td>
-                          <td> ";
-                          echo $data2["data_keg"][$x1]["nama_keg"];
-                          echo "</td>
-                          <td>";
-                          echo $data2["data_keg"][$x1]["tanggal"];
-                          echo "</td>
-                          <td>";
-                          echo $data2["data_keg"][$x1]["jumlah"];
-                          echo "</td>
-                          <td> <a> [Detail] </a></td>
-                          </tr>" ;
-                      }
-?>
+                      $temp1 = 1;
+                      foreach ($data2['data_keg'] as $kegiatan1) {
+                        $temp2 = count($kegiatan1);
+                        if ($temp1 == 1) {
+                          $temp1 = $temp1+1;
+                          echo "<tr>";
+                            echo "<td rowspan=$temp2 scope='row'>" . $data2['nama_sub'] . "</td>";
+                            echo "<td scope='row'>" . $kegiatan1['nama_keg'] . "</td>";
+                            echo "<td scope='row'>" . $kegiatan1['tanggal'] . "</td>";
+                            echo "<td scope='row'>" . $kegiatan1['jumlah'] . "</td>";
+                            echo "<td scope='row'><a href='detail.php?id={$kegiatan1['id_keg']}'>[Detail]</a></td>";
+                          echo "</tr>";
+                        } else {
+                            echo "<tr>";
+                              echo "<td scope='row'>" . $kegiatan1['nama_keg'] . "</td>";
+                              echo "<td scope='row'>" . $kegiatan1['tanggal'] . "</td>";
+                              echo "<td scope='row'>" . $kegiatan1['jumlah'] . "</td>";
+                              echo "<td scope='row'><a href='table2.php?id={$kegiatan1['id_keg']}'>[Detail]</a></td>";
+                            echo "</tr>";
+                        }
+                      };
+                    ?>
                 </tbody>
                 </table>
                 <div class="field padding-bottom--24" style="width: 100px;">
-                  <input class="btn btn-primary" type="submit" name="Back" value="Back" onclick="parent.location='index.php'">
+                  <input class="btn btn-primary" type="submit" name="Back" value="Back" onclick="parent.location='table1.php'">
                 </div>
             </div>
           </div>

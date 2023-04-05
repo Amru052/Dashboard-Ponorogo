@@ -73,28 +73,29 @@ echo($data1["nama_bidang"])
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td scope='col'>bidang</td>
-                        <td scope='col'>Pembangunan Prasarana Jalan Desa</td>
-                        <td scope='col'>27,735,000</td>
-                        <td><a href= 'detail.php?id=$id'> [Detail] </a></td>
-                    </tr>
                     <?php
-                      for ($x1 = 0; $x1 < 2; $x1++) {
-	                      for ($x2 = 0; $x2 < 2; $x2++) {
-		                      echo "<tr>
-                          <td>";
-                          echo $data1[$x1]["nama_bidang"];
-                          echo "</td>
-                          <td> ";
-                          echo $data1[$x1]["data_sub"][$x2]["nama_sub"];
-                          echo "</td>
-                          <td> total </td> 
-                          <td> <a> [Detail] </a></td>
-                          </tr>" ;
-	                      }
-                      }
-?>
+                      foreach ($data1 as $bidang) {
+                        $temp1=1;
+                        foreach ($bidang['data_sub'] as $sub) {
+                          $temp2 = count($sub);
+                          if ($temp1 == 1) {
+                            echo "<tr>";
+                              echo "<td rowspan=$temp2 scope='row'>" . $bidang['nama_bidang'] . "</td>";
+                              echo "<td scope='row'>" . $sub['nama_sub'] . "</td>";
+                              echo "<td scope='row'>" . $temp1 . "</td>";
+                              echo "<td scope='row'><a href='table2.php?id={$sub['nama_sub']}'>[Detail]</a></td>";
+                            echo "</tr>";
+                            $temp1 = $temp1+1;
+                          } else {
+                              echo "<tr>";
+                                echo "<td scope='row'>" . $sub['nama_sub'] . "</td>";
+                                echo "<td scope='row'>" . $temp1 . "</td>";
+                                echo "<td scope='row'><a href='table2.php?id={$sub['nama_sub']}'>[Detail]</a></td>";
+                              echo "</tr>";
+                          }                       
+                        };
+                      };
+                    ?>
                 </tbody>
                 </table>
                 <div class="field padding-bottom--24" style="width: 100px;">
