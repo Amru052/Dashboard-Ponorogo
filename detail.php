@@ -11,15 +11,13 @@ $data3 = array("nama_bidang"=>"Bidang 1",
             "nama_keg"=>"Kegiatan 1",
             "tanggal"=>"Tanggal 1",
             "data_uraian"=>[array("nama_uraian"=>"Uraian 1",
-                                  "total"=>" Total 1",
-                                  "data_rincian"=>[array("nama_rincian"=>"rincian 1","dana_rincian"=>"dana 1"),
-                                                   array("nama_rincian"=>"rincian 2","dana_rincian"=>"dana 2")
+                                  "data_rincian"=>[array("nama_rincian"=>"rincian 1","harga"=>11,"volume"=>5,"satuan"=>"KG"),
+                                                   array("nama_rincian"=>"rincian 2","harga"=>15,"volume"=>5,"satuan"=>"G")
                                                    ]
                                   ),
                             array("nama_uraian"=>"Uraian 2",
-                                  "total"=>" Total 2",
-                                  "data_rincian"=>[array("nama_rincian"=>"rincian 1","dana_rincian"=>"dana 1"),
-                                                   array("nama_rincian"=>"rincian 2","dana_rincian"=>"dana 2")
+                                  "data_rincian"=>[array("nama_rincian"=>"rincian 3","harga"=>11,"volume"=>5,"satuan"=>"L"),
+                                                   array("nama_rincian"=>"rincian 4","harga"=>15,"volume"=>5,"satuan"=>"mL")
                                                    ]
                                  )
                             ]
@@ -71,35 +69,16 @@ $data3 = array("nama_bidang"=>"Bidang 1",
               <table class="table table-borderless">
                     <tbody>
                     <tr>
-                        <td scope='row'>Bidang</td>
-                        <td scope='col'>: Pelaksanaan Pembangunan Desa</td>
+                        <td style = 'width:250px' scope='row'>Bidang</td>
+                        <td scope='col'>: <?php echo $data3["nama_bidang"]; ?></td>
                     </tr>
                     <tr>
                         <td scope='row'>Sub-bidang</td>
-                        <td scope='col'>: Pekerjaan Umum dan Penataan Ruang</td>
+                        <td scope='col'>: <?php echo $data3["nama_sub"]; ?></td>
                     </tr>
                     <tr>
                         <td scope='row'>Kegiatan</td>
-                        <td scope='col'>: Pembangunan Prasarana Jalan Desa</td>
-                    </tr>
-                    <tr>
-                        <td scope='row'>Waktu Pelaksanaan</td>
-                        <td scope='col'>: 11/11/2011</td>
-                    </tr>
-              </table>
-              <table class="table table-borderless">
-                    <tbody>
-                    <tr>
-                        <td scope='row'>Bidang</td>
-                        <td scope='col'>: <?php echo $data3["nama_bidang"]; ?> </td>
-                    </tr>
-                    <tr>
-                        <td scope='row'>Sub-bidang</td>
-                        <td scope='col'>: <?php echo $data3["nama_sub"]; ?> </td>
-                    </tr>
-                    <tr>
-                        <td scope='row'>Kegiatan</td>
-                        <td scope='col'>: <?php echo $data3["nama_keg"]; ?> </td>
+                        <td scope='col'>: <?php echo $data3["nama_keg"]; ?></td>
                     </tr>
                     <tr>
                         <td scope='row'>Waktu Pelaksanaan</td>
@@ -111,56 +90,54 @@ $data3 = array("nama_bidang"=>"Bidang 1",
                     <tr>
                     <th scope="col">Uraian</th>
                     <th scope="col">Rincian</th>
-                    <th scope="col">Dana</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Satuan</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Jumlah</th>
+                    <th style = "text-align: center" scope="col">Action</th>
                     <th scope="col" style='text-align: center'>Total</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td scope='col'>Belanja Honorarium</td>
-                        <td scope='col'>Honorarium TPK</td>
-                        <td scope='col'>1,550,000</td>
-                        <td rowspan="2" scope="col" style='text-align: center; vertical-align: middle'>2,300,000</td>
-                    </tr>
-                    <tr>
-                        <td scope='col'></td>
-                        <td scope='col'>Honorarium Tim Pemeriksa</td>
-                        <td scope='col'>750.000</td>
-                    </tr>
-                    <tr>
-                        <td scope='col'>Belanja Upah</td>
-                        <td scope='col'>Pekerja</td>
-                        <td scope='col'>17,700,000</td>
-                        <td rowspan="2" scope="col" style='text-align: center; vertical-align: middle'>25,435,000</td>
-                    </tr>
-                    <tr>
-                        <td scope='col'></td>
-                        <td scope='col'>Tukang</td>
-                        <td scope='col'>7,735,000</td>
-                    </tr>
                     <?php
-                      for ($x1 = 0; $x1 < 2; $x1++) {
-	                      for ($x2 = 0; $x2 < 2; $x2++) {
-		                      echo "<tr>
-                          <td>";
-                          echo $data3["data_uraian"][$x1]["nama_uraian"];
-                          echo "</td>
-                          <td> ";
-                          echo $data3["data_uraian"][$x1]["data_rincian"][$x2]["nama_rincian"];
-                          echo "</td>
-                          <td> ";
-                          echo $data3["data_uraian"][$x1]["data_rincian"][$x2]["dana_rincian"];
-                          echo "</td>
-                          <td> ";
-                          echo $data3["data_uraian"][$x1]["total"];
-                          echo "</td> 
-                          </tr>" ;
-	                      }
-                      }
-?>
+                      foreach ($data3['data_uraian'] as $uraian) {
+                        $temp1=1;
+                        $total=0;
+                        foreach ($uraian['data_rincian'] as $rincian) {
+                          $temp3 = $rincian['volume']*$rincian['harga'];
+                          $total=$total+$temp3;
+                        };
+                        foreach ($uraian['data_rincian'] as $rincian) {
+                          $temp2 = count($uraian["data_rincian"]);
+                          $temp3 = $rincian['volume']*$rincian['harga'];
+                          if ($temp1 == 1) {
+                            echo "<tr>";
+                              echo "<td style = 'vertical-align: middle' rowspan=$temp2 scope='row'>" . $uraian['nama_uraian'] . "</td>";
+                              echo "<td scope='row'>" . $rincian['nama_rincian'] . "</td>";
+                              echo "<td scope='row'>" . $rincian['volume'] . "</td>";
+                              echo "<td scope='row'>" . $rincian['satuan'] . "</td>";
+                              echo "<td scope='row'>" . $rincian['harga'] . "</td>";
+                              echo "<td scope='row'>" . $temp3 . "</td>";
+                              echo "<td style = 'text-align: center' scope='row'><a href='table2.php?id={}'>[Edit]</a><a href='table2.php?id={}'>[Delete]</a></td>";
+                              echo "<td style = 'text-align: center; vertical-align: middle' rowspan=$temp2 scope='row'>" . $total . "</td>";
+                            echo "</tr>";
+                            $temp1 = $temp1+1;
+                          } else {
+                              echo "<tr>";
+                              echo "<td scope='row'>" . $rincian['nama_rincian'] . "</td>";
+                              echo "<td scope='row'>" . $rincian['volume'] . "</td>";
+                              echo "<td scope='row'>" . $rincian['satuan'] . "</td>";
+                              echo "<td scope='row'>" . $rincian['harga'] . "</td>";
+                              echo "<td scope='row'>" . $temp3 . "</td>";
+                              echo "<td style = 'text-align: center' scope='row'><a href='table2.php?id={}'>[Edit]</a><a href='table2.php?id={}'>[Delete]</a></td>";
+                              echo "</tr>";
+                          }                       
+                        };
+                      };
+                    ?>
                     </table>
                 <div class="field padding-bottom--24" style="width: 100px;">
-                  <input class="btn btn-primary" type="submit" name="Back" value="Back" onclick="parent.location='table.php'">
+                  <input class="btn btn-primary" type="submit" name="Back" value="Back" onclick="parent.location='table2.php'">
                 </div>
             </div>
           </div>
