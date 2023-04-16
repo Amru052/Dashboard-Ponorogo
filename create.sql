@@ -39,8 +39,6 @@ ALTER TABLE `uraian` ADD FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_
 
 ALTER TABLE `rincian` ADD FOREIGN KEY (`id_uraian`) REFERENCES `uraian` (`id_uraian`);
 
-/**  INSERT **/
-
 INSERT INTO `bidang` VALUES ('1','Pemerintahan'),
                             ('2','Pembangunan'),
                             ('3','Pembinaan'),
@@ -61,3 +59,20 @@ INSERT INTO `rincian` VALUES ('11111','Amplop',1,15000,'lembar','1111'),
                                 ('11112','Kertas HVS',2,500000,'rim', '1111'),
                                 ('11113','Makan dan minum rapat',3,1000000,'box','1112'),
                                 ('11114','Belanja Snack',5,1500000,'kg','1112');
+
+
+$data2 = [array("id _bidang"=>"1",
+                "nama_bidang"=>"Pemerintahan",
+                "data_sub"=>[array("id_sub"=>"11","nama_sub"=>"Belanja Desa","dana"=>1*15000+2*500000),
+                             array("id_sub"=>"12","nama_sub"=>"Perencanaan")
+                            ]
+            ),
+         array("id _bidang"=>"2",
+                "nama_bidang"=>"Pembangunan",
+                "data_sub"=>[array("id_sub"=>"13","nama_sub"=>"Pelaporan"),
+                             array("id_sub"=>"14","nama_sub"=>"Tata Praja Pemerintahan")
+                            ]
+            )
+      ];
+                           
+SELECT b.id_bidang,b.nama_bidang, s.id_sub, s.nama_sub,sum(r.volume*r.harga) as total FROM bidang as b join subbidang as s ON b.id_bidang = s.id_bidang join kegiatan as k on s.id_sub = k.id_sub join uraian as u on k.id_kegiatan = u.id_kegiatan join rincian as r on u.id_uraian = r.id_uraian;

@@ -7,18 +7,36 @@
 </head>
 <?php
 
-$data1 = [array("nama_bidang"=>"Bidang 1",
-                "data_sub"=>[array("id_sub"=>"1","nama_sub"=>"Sub 1","dana"=>100),
-                             array("id_sub"=>"2","nama_sub"=>"Sub 2","dana"=>400)
-                            ]
-            ),
-         array("nama_bidang"=>"Bidang 2",
-                "data_sub"=>[array("id_sub"=>"3","nama_sub"=>"Sub 3","dana"=>300),
-                             array("id_sub"=>"4","nama_sub"=>"Sub 4","dana"=>400)
-                            ]
-            )
-      ];
-echo($data1["nama_bidang"])
+include 'db.php';
+$sql = "SELECT b.id_bidang,b.nama_bidang, s.id_sub, s.nama_sub,sum(r.volume*r.harga) as total FROM bidang as b join subbidang as s ON b.id_bidang = s.id_bidang join kegiatan as k on s.id_sub = k.id_sub join uraian as u on k.id_kegiatan = u.id_kegiatan join rincian as r on u.id_uraian = r.id_uraian;";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  $data1 = array();
+  while($row = $result->fetch_assoc()) {
+    $bidang_id = $row['id_bidang'];
+    $bidang_name = $row['nama_bidang'];
+    $sub_id = $row['id_sub'];
+    $sub_name = $row['nama_sub'];
+    $dana=$row['total'];
+
+    $bidang_exists = false;
+    foreach ($data1 as &$item) {
+      if ($item['id_bidang'] == $bidang_id) {
+        $bidang_exists = true;
+        $item['data_sub'][] = array('id_sub' => $sub_id, 'nama_sub' => $sub_name,'dana'=>$dana);
+        break;
+      }
+    }
+
+    if (!$bidang_exists) {
+      $data1[] = array('id_bidang' => $bidang_id, 'nama_bidang' => $bidang_name, 'data_sub' => array(array('id_sub' => $sub_id, 'nama_sub' => $sub_name,'dana'=>$dana)));
+    }
+  }
+  print_r($data1);
+} else {
+  echo "0 results";
+};
 ?>
 <body>
   <div class="login-root">
