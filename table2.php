@@ -6,14 +6,41 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <?php
-
-$data2 = array("nama_sub"=>"Sub 1",
-               "data_keg"=>[array("id_keg"=>"keg1","nama_keg"=>"kegiatan 1","tanggal"=>"tanggal 1","jumlah"=>"jumlah 1"),
-                            array("id_keg"=>"keg2","nama_keg"=>"kegiatan 2","tanggal"=>"tanggal 2","jumlah"=>"jumlah 2"),
-                            array("id_keg"=>"keg3","nama_keg"=>"kegiatan 3","tanggal"=>"tanggal 3","jumlah"=>"jumlah 3")
-                           ]
-            );
 $id_sub = $_REQUEST['id'];
+include 'db.php';
+$sql = "SELECT kegiatan.id_sub,
+          subbidang.nama_sub,kegiatan.nama_kegiatan, kegiatan.tanggal,
+          sum(rincian.volume*rincian.harga) as total ,kegiatan.id_kegiatan
+        FROM subbidang
+        JOIN kegiatan ON subbidang.id_sub = kegiatan.id_sub
+        JOIN uraian ON kegiatan.id_kegiatan = uraian.id_kegiatan
+        JOIN rincian ON uraian.id_uraian = rincian.id_uraian
+        WHERE kegiatan.id_sub=$id_sub;
+";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+  $data2 = array();
+  $current_sub = '';
+  while($row = $result->fetch_assoc()) {
+    if ($row['nama_sub'] != $current_sub) {
+      $current_sub = $row['nama_sub'];
+      $data2 = array(
+        "nama_sub" => $row['nama_sub'],
+        "data_keg" => array()
+      );
+    }
+    $data2['data_keg'][] = array(
+      "id_keg" => $row['id_kegiatan'],
+      "nama_keg" => $row['nama_kegiatan'],
+      "tanggal" => $row['tanggal'],
+      "jumlah" => $row['total']
+    );
+  }
+  print_r($data2);
+} else {
+  echo "0 results";
+}
+
 ?>
 <body>
   <div class="login-root">

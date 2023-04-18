@@ -106,7 +106,7 @@ if ($result->num_rows > 0) {
                               echo "<td style = 'vertical-align: middle' rowspan=$temp2 scope='row'>" . $bidang['nama_bidang'] . "</td>";
                               echo "<td scope='row'>" . $sub['nama_sub'] . "</td>";
                               echo "<td scope='row'>" . $sub['dana'] . "</td>";
-                              echo "<td scope='row'><a href='table2.php?id={$sub['nama_sub']}'>[Detail]</a></td>";
+                              echo "<td scope='row'><a href='table2.php?id={$sub['id_sub']}'>[Detail]</a></td>";
                               echo "<td style = 'vertical-align: middle' rowspan=$temp2 scope='row'>" . $total . "</td>";
                             echo "</tr>";
                             $temp1 = $temp1+1;
@@ -114,7 +114,7 @@ if ($result->num_rows > 0) {
                               echo "<tr>";
                                 echo "<td scope='row'>" . $sub['nama_sub'] . "</td>";
                                 echo "<td scope='row'>" . $sub['dana'] . "</td>";
-                                echo "<td scope='row'><a href='table2.php?id={$sub['nama_sub']}'>[Detail]</a></td>";
+                                echo "<td scope='row'><a href='table2.php?id={$sub['id_sub']}'>[Detail]</a></td>";
                               echo "</tr>";
                           }                       
                         };
