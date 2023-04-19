@@ -211,9 +211,25 @@
                     </div>
                   </div>
                 </fieldset>
-                <div class="field padding-bottom--24">
-                  <input class="btn btn-primary" type="submit" name="submit" value="Submit">
-                </div>
+                <div class="row">
+                          <div class="col-md-4 mb-3">
+                            <div class="field padding-bottom--24">
+                                <input class="btn btn-primary" type="submit" name="Tambah Rincian" value="Tambah Rincian">
+                            </div>
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <div class="field padding-bottom--24">
+                                <input class="btn btn-primary" type="submit" name="Tambah Uraian Baru" value="Tambah Uraian Baru">
+                            </div>
+                          </div>
+                          <div class="col-md-4 mb-3">
+                            <div class="field padding-bottom--24">
+                                <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+                            </div>
+                          </div>
+
+                        </div>
+
               </form>
 
               <script>
