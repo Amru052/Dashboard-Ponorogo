@@ -1,15 +1,18 @@
 CREATE TABLE `bidang` (
+  `serial_bidang` serial,
   `id_bidang` varchar(255) PRIMARY KEY,
   `nama_bidang` varchar(255)
 );
 
 CREATE TABLE `subbidang` (
+  `serial_subbidang` serial,
   `id_sub` varchar(255) PRIMARY KEY,
   `nama_sub` varchar(255),
   `id_bidang` varchar(255)
 );
 
 CREATE TABLE `kegiatan` (
+  `serial_kegiatan` serial,
   `id_kegiatan` varchar(255) PRIMARY KEY,
   `nama_kegiatan` varchar(255),
   `tanggal` date,
@@ -17,12 +20,14 @@ CREATE TABLE `kegiatan` (
 );
 
 CREATE TABLE `uraian` (
+  `serial_uraian` serial,
   `id_uraian` varchar(255) PRIMARY KEY,
   `nama_uraian` varchar(255),
   `id_kegiatan` varchar(255)
 );
 
 CREATE TABLE `rincian` (
+  `serial_rincian` serial,
   `id_rincian` varchar(255) PRIMARY KEY,
   `nama_rincian` varchar(255),
   `volume` integer,
