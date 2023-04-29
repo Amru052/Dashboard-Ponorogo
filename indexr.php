@@ -78,7 +78,6 @@
                       <legend class="col-form-label col-sm-10 pt-0">Jenis Rencana Anggaran Belanja</legend>
                       <div class="form-row">
                         <span class="padding-bottom--12">Uraian 1</span>
-                        <input type="text" class="form-control" name="uraian" placeholder="Belanja Upah" required>
                         <div class="row">
                           <div class="col-md-6 mb-3 padding-top--12">
                             <label for="validationCustom01">Rincian 1</label>

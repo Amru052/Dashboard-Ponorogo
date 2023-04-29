@@ -49,22 +49,74 @@
         <div class="formbg-outer">
           <div class="formbg">
             <div class="formbg-inner padding-horizontal--48">
-              <form class="needs-validation" action="input.php" method="POST" novalidate>
+              <form class="needs-validation" action="tes5.php?phase=1" method="POST" novalidate>
                 <span>Input: </span>
                   <fieldset class="form-group ">
-                    <div class="row question padding-bottom--24">
+                    <div class="row question padding-bottom--3">
                       <legend class="col-form-label col-sm-10 pt-0">Jenis Rencana Anggaran Belanja</legend>
-                      <div class="col-md-12 mb-3">
-                        <select class="form-select" aria-label="Default select example" name="jenis_kelamin" required>
-                          <option selected disabled>Open this select menu</option>
-                          <option value="Penyelenggaraan_Pemerintahan_Desa">Penyelenggaraan Pemerintahan Desa</option>
-                          <option value="Pelaksanaan_Pembangunan_Desa">Pelaksanaan Pembangunan Desa </option>
-                          <option value="Pembinaan_Kemasyarakatan_Desa">Pembinaan Kemasyarakatan Desa</option>
-                          <option value="Pemberdayaan_Masyarakat_Desa">Pemberdayaan Masyarakat Desa</option>
-                        </select>
+                      <div class="form-row">
+                        <div class="row padding-bottom--3">
+                          <div class="col-md-9 mb-3">
+                            <legend class="col-form-label col-sm-10 pt-0">Bidang</legend>
+                            <?php
+                              include 'db.php';
+                              $sql = "SELECT id_bidang, nama_bidang from bidang;";
+                              $result = $conn->query($sql);
+                              ?>
+                              <select class="form-select" aria-label="Default select example" name="bidang" required>
+                              <option selected disabled>Open this select menu</option>
+                              <?php
+                              if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                  $id_bidang = $row["id_bidang"];
+                                  $nama_bidang = $row["nama_bidang"];
+                                  echo ("<option value=$id_bidang>$nama_bidang</option>");
+                                }
+                              } else {
+                                echo "0 results";
+                              };
+                              echo ("</select>")
+                            ?>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="field" style="padding-top: 30px;">
+                            <a class="btn" href="table2.php?id=<?php echo $sub['id_sub']; ?>">[+] Tambah</a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div class="form-row">
-                        <div class="row padding-bottom--24">
+                        <div class="row padding-bottom--3">
+                          <div class="col-md-9 mb-3">
+                            <legend class="col-form-label col-sm-10 pt-0">Sub-Bidang</legend>
+                            <?php
+                              $sql = "SELECT id_sub,nama_sub from subbidang;";
+                              $result = $conn->query($sql);
+                              ?>
+                              <select class="form-select" aria-label="Default select example" name="subbidang" required>
+                              <option selected disabled>Open this select menu</option>
+                              <?php
+                              if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                  $id_sub = $row["id_sub"];
+                                  $nama_sub = $row["nama_sub"];
+                                  echo ("<option value=$id_sub>$nama_sub</option>");
+                                }
+                              } else {
+                                echo "0 results";
+                              };
+                              echo ("</select>")
+                            ?>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <div class="field" style="padding-top: 30px;">
+                            <a class="btn" href="table2.php?id=<?php echo $sub['id_sub']; ?>">[+] Tambah</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="row padding-top--24">
                           <div class="col-md-9 mb-3">
                             <legend class="col-form-label col-sm-10 pt-0">Kegiatan</legend>
                             <input type="text" class="form-control" name="kegiatan" placeholder="Pembangunan Prasarana Jalan Desa" required>
@@ -81,83 +133,12 @@
                           </div>
                         </div>
                       </div>
-                      <div class="form-row">
-                        <span class="padding-bottom--12">Uraian 1</span>
-                        <input type="text" class="form-control" name="uraian[]" placeholder="Belanja Upah" required>
-                        <div class="row padding-bottom--24">
-                          <div class="col-md-9 mb-3 padding-top--12">
-                            <label for="validationCustom01">Rincian</label>
-                            <input type="text" class="form-control" name="uraian[0][rincian][]" placeholder="Pekerja" required>
-                              <div class="valid-feedback">
-                                Looks good!
-                              </div>
-                          </div>
-                          <div class="col-md-3 mb-3 padding-top--12">
-                            <label for="validationCustom01">Dana</label>
-                            <input type="text" class="form-control" name="uraian[0][dana][]" placeholder=1,000,000 required>
-                            <div class="valid-feedback">
-                              Looks good!
-                            </div>
-                          </div>
-                          <div class="col-md-9 mb-3">
-                            <label for="validationCustom01">Rincian</label>
-                            <input type="text" class="form-control" name="uraian[0][rincian][]" placeholder="Tukang" required>
-                              <div class="valid-feedback">
-                                Looks good!
-                              </div>
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <label for="validationCustom01">Dana</label>
-                            <input type="text" class="form-control" name="uraian[0][dana][]" placeholder=1,000,000 required>
-                            <div class="valid-feedback">
-                              Looks good!
-                            </div>
-                        </div>
-                      </div>
-                      <div class="form-row">
-                        <span class="padding-bottom--12">Uraian 2</span>
-                        <input type="text" class="form-control" name="uraian=[]" placeholder="Belanja Upah" required>
-                        <div class="row padding-bottom--24">
-                          <div class="col-md-9 mb-3 padding-top--12">
-                            <label for="validationCustom01">Rincian</label>
-                            <input type="text" class="form-control" name="uraian[1][rincian][]" placeholder="Pekerja" required>
-                              <div class="valid-feedback">
-                                Looks good!
-                              </div>
-                          </div>
-                          <div class="col-md-3 mb-3 padding-top--12">
-                            <label for="validationCustom01">Dana</label>
-                            <input type="text" class="form-control" name="uraian[1][dana][]" placeholder=1,000,000 required>
-                            <div class="valid-feedback">
-                              Looks good!
-                            </div>
-                          </div>
-                          <div class="col-md-9 mb-3">
-                            <label for="validationCustom01">Rincian</label>
-                            <input type="text" class="form-control" name="uraian[1][rincian][]" placeholder="Tukang" required>
-                              <div class="valid-feedback">
-                                Looks good!
-                              </div>
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <label for="validationCustom01">Dana</label>
-                            <input type="text" class="form-control" name="uraian[1][dana][]" placeholder=1,000,000 required>
-                            <div class="valid-feedback">
-                              Looks good!
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+
                 </fieldset>
                 <div class="field padding-bottom--24">
-                  <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+                  <input class="btn btn-primary" type="submit" name="submit" value="Selanjutnya">
                 </div>
               </form>
-              <?php
-                $col = json_encode($uraian);
-              ?>
 
               <script>
               // Example starter JavaScript for disabling form submissions if there are invalid fields
