@@ -1,117 +1,131 @@
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Survey COVID-19</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-</head>
+<?php
+include 'db.php';
+global $conn;
+  if(isset($_REQUEST['phase'])){
+    $phase = $_REQUEST['phase'];
+  };
+  if(isset($_REQUEST['idu'])){
+    $idu = $_REQUEST['idu'];
+  };
+  if(isset($_REQUEST['idk'])){
+    $idk = $_REQUEST['idk'];
+  };
 
-<body>
-  <div class="login-root">
-    <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
-      <div class="loginbackground box-background--white padding-top--64">
-        <div class="loginbackground-gridContainer">
-          <div class="box-root flex-flex" style="grid-area: top / start / 8 / end;">
-            <div class="box-root" style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1;">
-            </div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5;">
-            <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2;">
-            <div class="box-root box-background--blue800" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4;">
-            <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6;">
-            <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end;">
-            <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end;">
-            <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20;">
-            <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17;">
-            <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
-        <div class="formbg-outer padding-top--128">
-          <div class="formbg">
-            <div class="formbg-inner padding-horizontal--48">
-                <?php
-                    include "db.php";
-                    if (isset($_POST["submit"])){
-                        $nama_lengkap = $_POST["nama_lengkap"];
-                        $domisili = $_POST["domisili"];
-                        $umur = $_POST["umur"];
-                        $jenis_kelamin = $_POST["jenis_kelamin"];
-                        $tanggal_lahir = $_POST["tanggal_lahir"];
-                        $tanggal_terjangkit = $_POST["tanggal_terjangkit"];
-                        $tanggal_sembuh = $_POST["tanggal_sembuh"];
-                        $protokol = $_POST["protokol"];
-                        $masker = $_POST["masker"];
-                        $cuci_tangan = $_POST["cuci_tangan"];
-                        $komorbid = $_POST["komorbid"];
-                        $gejala_umum = $_POST["gejala_umum"];
-                        $gejala_tidak_umum = $_POST["gejala_tidak_umum"];
-                        $gejala_serius = $_POST["gejala_serius"];
-                        $range_gejala = $_POST["range_gejala"];
-                        $kebiasaan = $_POST["kebiasaan"];
-                        ?>
-                        <div class="box-root padding-top-bottom--48 flex-flex flex-justifyContent--center">
-                            <h1>Terima Kasih <?php echo $nama_lengkap[0] ?></h1>
-                        </div>
-                        <?php
-                        $nl=implode(" ",$nama_lengkap);
-                        $k=implode(", ",$komorbid);
-                        $u=implode(", ",$gejala_umum);
-                        $tu=implode(", ",$gejala_tidak_umum);
-                        $s=implode(", ",$gejala_serius);
-                        $kb=implode(", ",$kebiasaan);
+// fase 1 (fase input bidang-subbidang)
+  if ($phase == 1){
+    if (isset($_POST["submit"])){
+      $id_bidang = $_POST["bidang"];
+      $id_sub = $_POST["subbidang"];
+      $kegiatan = $_POST["kegiatan"];
+      $tanggal_kegiatan = $_POST["tanggal_kegiatan"];
+    };
+    
+    $sql = "SELECT * FROM subbidang WHERE id_bidang IS null;";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+      $sql = "UPDATE subbidang SET id_bidang = $id_bidang WHERE id_bidang IS null;";
+      mysqli_query($conn, $sql);
+    };
 
-                        $sql = "INSERT INTO tpasien (nama_lengkap, domisili, umur, jenis_kelamin,
-                                                    tanggal_lahir, tanggal_terjangkit, tanggal_sembuh, protokol,
-                                                    masker, cuci_tangan, komorbid, gejala_umum,
-                                                    gejala_tidak_umum, gejala_serius, range_gejala, kebiasaan)
-                                VALUES ('$nl', '$domisili', '$umur', '$jenis_kelamin',
-                                        '$tanggal_lahir', '$tanggal_terjangkit', '$tanggal_sembuh', '$protokol',
-                                        '$masker', '$cuci_tangan', '$k', '$u',
-                                        '$tu', '$s', '$range_gejala', '$kb')";
-                        $result = mysqli_query($conn, $sql);
-                        if ($result == true) {
-                        } else {
-                            echo "<script>alert('Data Tidak Berhasil Ditambahkan');window.location='index.php';</script>";
-                        }
-                        
-                    }
-               ?>
-                <div class="box-root padding-top-bottom--48 flex-flex flex-justifyContent--center">
-                    <div class="field padding-bottom--24" style="width: 500px;">
-                        <input class="btn btn-primary" type="submit" name="View Database" value="View Database" onclick="parent.location='table.php'">
-                    </div> 
-                </div>
-            </div> 
 
-          </div>
-          <div class="footer-link padding-top--24">
-            <span></span>
-            <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
-              <span><a href="#">Amru Rasyid Hammami</a></span>
-              <span><a href="#">2043211052</a></span>
-              <span><a href="#">MBD (A)</a></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
+    $sql = "SELECT max(serial_kegiatan) as serial_kegiatan from kegiatan;";
+    $result = $conn->query($sql);
+    while($row = $result->fetch_assoc()) {
+        $id_kegiatan = "K" . ($row['serial_kegiatan'] + 1);;
+      };
+    $sql = "INSERT INTO kegiatan (id_kegiatan, nama_kegiatan, tanggal, id_sub)
+              VALUES ('$id_kegiatan', '$kegiatan', '$tanggal_kegiatan', '$id_sub')";
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+      echo "<script>alert('Data Tidak Berhasil Ditambahkan');window.location='index.php';</script>";
+    } else {
+      header('location:indexu.php?phase=2'.'&idk='.$id_kegiatan);
+    };
+    exit;
 
-</html>
+// fase 2 (fase input uraian dengan rincian)
+  } elseif ($phase == 2){
+    if (isset($_POST["submit"])){
+      $uraian = $_POST["uraian"];
+      $rincian = $_POST["rincian"];
+      $volume = $_POST["volume"];
+      $satuan = $_POST["satuan"];
+      $harga = $_POST["harga"];
+      $submitValue = $_POST["submit"];
+    };
+    // mengambil mengambil serial uraian untuk id_uraian
+    $sql = "SELECT max(serial_uraian) as serial_uraian from uraian;";
+    $result = $conn->query($sql);
+    while($row = $result->fetch_assoc()) {
+      $id_uraian = "U".($row['serial_uraian']+1);
+    };
+    // insert uraian
+    $sql = "INSERT INTO uraian (id_uraian, nama_uraian, id_kegiatan)
+              VALUES ('$id_uraian', '$uraian', '$idk')";
+    $result = mysqli_query($conn, $sql);
+    //mengambil serial rincian untuk id_rincian
+    $sql = "SELECT max(serial_rincian) as serial_rincian from rincian;";
+    $result = $conn->query($sql);
+    while($row = $result->fetch_assoc()) {
+        $serial_rincian = $row['serial_rincian'];
+    };
+    // insert rincian
+    $sql = "insert into rincian(id_rincian, nama_rincian, volume, harga, satuan, id_uraian) values ";
+    for ($i = 0; $i < count($rincian); $i++) {
+        if (!empty($rincian[$i]) && !empty($volume[$i]) && !empty($harga[$i]) && !empty($satuan[$i]) && !empty($id_uraian)) {
+            $serial_rincian = $serial_rincian + 1;
+            $sql = $sql . "('R" . ($serial_rincian) . "', '" . $rincian[$i] . "', " . $volume[$i] . ", " . $harga[$i] . ", '" . $satuan[$i] . "', '" . $id_uraian . "'),";
+        }
+    };
+    $sql=substr($sql, 0, -1).";";
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+      echo "<script>alert('Data Tidak Berhasil Ditambahkan');window.location='indexu.php?phase=2&idk=".$idk."';</script>";
+    } else {
+      if ($submitValue == "Tambah Rincian"){
+        header('location: indexr.php?phase=3'.'&idk='.$idk.'&idu=' . $id_uraian);
+      } elseif ($submitValue == "Tambah Uraian"){
+        header('location: indexu.php?phase=2'.'&idk='.$idk);
+      };
+      exit;
+    };
+
+// fase 3 (fase input rincian tambahan)
+  } elseif ($phase == 3){
+    if (isset($_POST["submit"])){
+      $rincian = $_POST["rincian"];
+      $volume = $_POST["volume"];
+      $satuan = $_POST["satuan"];
+      $harga = $_POST["harga"];
+    };
+    //mengambil serial rincian untuk id_rincian
+    $sql = "SELECT max(serial_rincian) as serial_rincian from rincian;";
+    $result = $conn->query($sql);
+    while($row = $result->fetch_assoc()) {
+        $serial_rincian = $row['serial_rincian'];
+    };
+    // insert rincian
+    $sql = "insert into rincian(id_rincian, nama_rincian, volume, harga, satuan, id_uraian) values ";
+    for ($i = 0; $i < count($rincian); $i++) {
+      if (!empty($rincian[$i]) && !empty($volume[$i]) && !empty($harga[$i]) && !empty($satuan[$i])) {
+        $serial_rincian = $serial_rincian + 1;
+        $sql = $sql . "('R" . ($serial_rincian) . "', '" . $rincian[$i] . "', " . $volume[$i] . ", " . $harga[$i] . ", '" . $satuan[$i] . "', '" . $idu . "'),";
+      };
+    };
+    $sql=substr($sql, 0, -1).";";
+    echo($sql);
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+      echo "<script>alert('Data Tidak Berhasil Ditambahkan');window.location='indexu.php?phase=2&idk=".$id_kegiatan."';</script>";
+    } else {
+      if ($submitValue == "Tambah Rincian"){
+        header('location: indexr.php?phase=3'.'&idk='.$idk.'&idu=' . $idu);
+      } elseif ($submitValue == "Tambah Uraian"){
+        header('location: indexu.php?phase=2'.'&idk='.$idk);
+      };
+      header('location:indexu.php?phase=2'.'&idk='.$idk);
+    };
+  } else {
+    echo "error 123";
+  };
+?>
