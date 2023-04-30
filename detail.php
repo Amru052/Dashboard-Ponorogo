@@ -19,7 +19,7 @@ $sql = "SELECT
         JOIN kegiatan ON subbidang.id_sub = kegiatan.id_sub
         JOIN uraian ON kegiatan.id_kegiatan = uraian.id_kegiatan
         JOIN rincian ON uraian.id_uraian = rincian.id_uraian
-        WHERE kegiatan.id_kegiatan = $idd;
+        WHERE kegiatan.id_kegiatan = '{$idd}';
 ";
 $result = $conn->query($sql);
 
@@ -63,7 +63,7 @@ if ($result->num_rows > 0) {
         "tanggal"=>$tanggal,
         "id_keg"=>$idd,
         "data_uraian"=>$data_uraian);
-    print_r($data3);
+
   } else {
     echo "0 results";
   };

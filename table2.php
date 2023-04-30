@@ -15,7 +15,7 @@ $sql = "SELECT kegiatan.id_sub,
         JOIN kegiatan ON subbidang.id_sub = kegiatan.id_sub
         JOIN uraian ON kegiatan.id_kegiatan = uraian.id_kegiatan
         JOIN rincian ON uraian.id_uraian = rincian.id_uraian
-        WHERE kegiatan.id_sub=$id_sub;
+        WHERE kegiatan.id_sub='{$id_sub}';
 ";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {

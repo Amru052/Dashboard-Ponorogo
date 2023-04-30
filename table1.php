@@ -8,7 +8,7 @@
 <?php
 
 include 'db.php';
-$sql = "SELECT b.id_bidang,b.nama_bidang, s.id_sub, s.nama_sub,sum(r.volume*r.harga) as total FROM bidang as b join subbidang as s ON b.id_bidang = s.id_bidang join kegiatan as k on s.id_sub = k.id_sub join uraian as u on k.id_kegiatan = u.id_kegiatan join rincian as r on u.id_uraian = r.id_uraian;";
+$sql = "SELECT b.id_bidang,b.nama_bidang, s.id_sub, s.nama_sub,sum(r.volume*r.harga) as total FROM bidang as b join subbidang as s ON b.id_bidang = s.id_bidang join kegiatan as k on s.id_sub = k.id_sub join uraian as u on k.id_kegiatan = u.id_kegiatan join rincian as r on u.id_uraian = r.id_uraian group by s.id_sub;";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
       $data1[] = array('id_bidang' => $bidang_id, 'nama_bidang' => $bidang_name, 'data_sub' => array(array('id_sub' => $sub_id, 'nama_sub' => $sub_name,'dana'=>$dana)));
     }
   }
-  print_r($data1);
+
 } else {
   echo "0 results";
 };
@@ -80,7 +80,7 @@ if ($result->num_rows > 0) {
         <div class="formbg2-outer">
           <div class="formbg2">
             <div class="formbg2-inner padding-horizontal--48">
-              <span class="padding-bottom--15">BIDANG RAB</span>
+              <span class="padding-bottom--15">RAB</span>
               <table class="table table-hover">
                 <thead>
                     <tr>
