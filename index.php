@@ -49,7 +49,7 @@
         <div class="formbg-outer">
           <div class="formbg">
             <div class="formbg-inner padding-horizontal--48">
-              <form class="needs-validation" action="tes5.php?phase=1" method="POST" novalidate>
+              <form class="needs-validation" action="input.php?phase=1" method="POST" novalidate>
                 <span>Input: </span>
                   <fieldset class="form-group ">
                     <div class="row question padding-bottom--3">
@@ -60,7 +60,7 @@
                             <legend class="col-form-label col-sm-10 pt-0">Bidang</legend>
                             <?php
                               include 'db.php';
-                              $sql = "SELECT id_bidang, nama_bidang from bidang;";
+                              $sql = "SELECT id_bidang, nama_bidang from bidang group by id_bidang;";
                               $result = $conn->query($sql);
                               ?>
                               <select class="form-select" aria-label="Default select example" name="bidang" required>
@@ -90,7 +90,7 @@
                           <div class="col-md-9 mb-3">
                             <legend class="col-form-label col-sm-10 pt-0">Sub-Bidang</legend>
                             <?php
-                              $sql = "SELECT id_sub,nama_sub from subbidang;";
+                              $sql = "SELECT id_sub,nama_sub from subbidang group by id_sub;";
                               $result = $conn->query($sql);
                               ?>
                               <select class="form-select" aria-label="Default select example" name="subbidang" required>

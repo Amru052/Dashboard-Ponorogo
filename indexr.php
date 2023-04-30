@@ -7,26 +7,8 @@
 </head>
 <?php
   $phase = $_REQUEST['phase'];
-  if (isset($_POST["submit"])){
-    $bidang = $_POST["bidang"];
-    $subbidang = $_POST["subbidang"];
-    $kegiatan = $_POST["kegiatan"];
-    $tanggal_kegiatan = $_POST["tanggal_kegiatan"];
-
-  };
-  if ($phase = 1){
-    include 'db.php';
-    $sql = "SELECT max(serial_kegiatan) as serial_kegiatan from kegiatan;";
-    $result = $conn->query($sql);
-    while($row = $result->fetch_assoc()) {
-        $id_kegiatan = "K{$row['serial_kegiatan']}";
-      };
-    $sql = "INSERT INTO kegiatan (id_kegiatan, nama_kegiatan, tanggal, id_sub)
-              VALUES ('$id_kegiatan', '$kegiatan', '$tanggal_kegiatan', '$subbidang')";
-    echo $sql;
-  } elseif ($phase > 1){
-
-  };
+  $id_kegiatan = $_REQUEST['idk'];
+  $id_uraian = $_REQUEST['idu'];
 ?>
 
 <body>
@@ -71,7 +53,7 @@
         <div class="formbg2-outer">
           <div class="formbg2">
             <div class="formbg2-inner padding-horizontal--48">
-              <form class="needs-validation" action="input.php" method="POST" novalidate>
+              <form class="needs-validation" action="input.php?phase=<?php echo $phase; ?>&idk=<?php echo $id_kegiatan; ?>&idu=<?php echo $id_uraian; ?>" method="POST" novalidate>
                 <span>Input: </span>
                   <fieldset class="form-group ">
                     <div class="row question padding-bottom--24">
@@ -152,12 +134,12 @@
                 <div class="row">
                           <div class="col-md-4 mb-3">
                             <div class="field padding-bottom--24">
-                                <a class="btn btn-primary" href="indexr.php?idu=<?php echo $id_uraian; ?>">Tambah Rincian</a>
+                                <input class="btn btn-primary" type="submit" name="submit" value="Tambah Rincian">
                             </div>
                           </div>
                           <div class="col-md-4 mb-3">
                             <div class="field padding-bottom--24">
-                              <a class="btn btn-primary" href="indexu.php?phase=<?php echo $phase+1; ?>&idk=<?php echo $id_kegiatan; ?>">Tambah Rincian</a>
+                              <input class="btn btn-primary" type="submit" name="submit" value="Tambah Uraian">
                             </div>
                           </div>
                           <div class="col-md-4 mb-3">
